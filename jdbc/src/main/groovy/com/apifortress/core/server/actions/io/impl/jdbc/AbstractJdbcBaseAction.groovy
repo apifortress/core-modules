@@ -24,10 +24,10 @@ abstract class AbstractJdbcBaseAction {
     public void init(){
         final String driver = configContext.jdbc[configSection]['driver']
         final String url = configContext.jdbc[configSection]['url']
-        final String username = configContext.jdbc[configSection]['username']
-        final String password = configContext.jdbc[configSection]['password']
 
         Class.forName(driver)
-        connection = DriverManager.getConnection(url,username,password)
+        Properties properties = new Properties()
+        properties.putAll(configContext.jdbc[configSection]['properties'])
+        connection = DriverManager.getConnection(url,properties)
     }
 }

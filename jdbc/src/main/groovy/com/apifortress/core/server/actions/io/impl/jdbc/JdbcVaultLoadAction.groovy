@@ -14,7 +14,7 @@ import java.sql.ResultSet
  * */
 class JdbcVaultLoadAction extends AbstractJdbcBaseAction implements IVaultLoadAction {
 
-    private Yaml yaml = new Yaml()
+    private static Yaml yaml = new Yaml()
 
     @Override
     protected String getConfigSection() {
