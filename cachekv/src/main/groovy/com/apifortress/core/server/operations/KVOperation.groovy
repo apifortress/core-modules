@@ -59,14 +59,14 @@ class KVOperation extends WSOperation {
                     if (item == null || !(item instanceof List))
                         item = []
                     (item as List).push(obj)
-                    kvCache.put(new Element(key, item))
+                    kvCache.put(new Element(finalKey, item))
                     break
                 case 'pop':
                     def item = kvCache.get(finalKey)?.getObjectValue()
                     if (item == null || ((item instanceof List) && item.size() == 0))
                         return null
                     def res = (item as List).pop()
-                    kvCache.put(new Element(key, item))
+                    kvCache.put(new Element(finalKey, item))
                     runner.scope.set(var, res)
                     break
                 case 'load':
