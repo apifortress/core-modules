@@ -1,0 +1,29 @@
+<unit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="main" xsi:noNamespaceSchemaLocation="http://apifortress.com/app/unit.xsd">
+  <requirements>
+  </requirements>
+  <configs>
+  </configs>
+  <sequence name="main">
+    <comment>
+      <![CDATA[Developers workflow demo #4]]>
+    </comment>
+    <get url="${protocol}${domain}${endpoint}" params="[:]" var="payload" mode="json" gen="rag">
+      <header name="key" value="${key}" gen="rag"/>
+    </get>
+    <assert-equals expression="payload_response.statusCode" value="200"/>
+    <assert-equals expression="payload_response.headers[&apos;Content-Type&apos;]" value="application/json; charset=utf-8"/>
+    <assert-is expression="payload" type="array" gen="jag"/>
+    <each expression="payload.pick(5)" gen="jag">
+      <assert-exists expression="_1.category"  gen="jag"/>
+      <assert-is expression="_1.color" type="array" gen="jag"/>
+      <assert-exists expression="_1.createdAt"  gen="jag"/>
+      <assert-exists expression="_1.description"  gen="jag"/>
+      <assert-is expression="_1.id" type="integer" gen="jag"/>
+      <assert-is expression="_1.imageURL" type="url" gen="jag"/>
+      <assert-exists expression="_1.name"  gen="jag"/>
+      <assert-is expression="_1.price" type="float" gen="jag"/>
+      <assert-is expression="_1.quantity" type="integer" gen="jag"/>
+      <assert-exists expression="_1.updatedAt"  gen="jag"/>
+    </each>
+  </sequence>
+</unit>
