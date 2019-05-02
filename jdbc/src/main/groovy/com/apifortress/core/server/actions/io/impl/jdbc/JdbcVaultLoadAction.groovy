@@ -28,13 +28,15 @@ class JdbcVaultLoadAction extends AbstractJdbcBaseAction implements IVaultLoadAc
 
     @Override
     MVault loadVault(Object companyId, Object projectId) {
-        PreparedStatement smt = connection.prepareStatement("SELECT * FROM ${configContext.jdbc.vault.table} where companyId=? AND projectId=?")
+        PreparedStatement smt = connection.prepareStatement("SELECT * FROM ${configContext.jdbc.vault.table} where company_id=? AND project_id=?")
         smt.setObject(1,companyId)
         smt.setObject(2,projectId)
         ResultSet rs = smt.executeQuery()
         MVault vault
         if(rs.next())
             vault = MVault.create(yaml.load(rs.getString('data')))
+        else
+            vault = new MVault()
         rs.close()
         return vault
     }

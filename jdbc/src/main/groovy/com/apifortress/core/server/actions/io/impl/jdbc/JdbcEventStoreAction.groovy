@@ -19,7 +19,7 @@ class JdbcEventStoreAction extends AbstractJdbcBaseAction implements IEventStore
         final def companyId = mEvent.companyId
         final def projectId = mEvent.projectId
         final def testId = mEvent.test.id
-        final PreparedStatement smt = connection.prepareStatement("INSERT INTO ${configContext.jdbc.events.table} (id,companyId,projectId,testId,date,data) VALUES(?,?,?,?,?,?)")
+        final PreparedStatement smt = connection.prepareStatement("INSERT INTO ${configContext.jdbc.events.table} (id,company_id,project_id,test_id,date,data) VALUES(?,?,?,?,?,?)")
         smt.setString(1,mEvent._id)
         smt.setObject(2,companyId)
         smt.setObject(3,projectId)

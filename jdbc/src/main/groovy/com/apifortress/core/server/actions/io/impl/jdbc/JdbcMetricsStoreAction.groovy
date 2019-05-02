@@ -26,7 +26,7 @@ class JdbcMetricsStoreAction extends AbstractJdbcBaseAction implements IMetricsS
         final def companyId = mMetrics.companyId
         final def projectId = mMetrics.projectId
         final def testId = mMetrics.testId
-        final PreparedStatement smt = connection.prepareStatement("INSERT INTO ${configContext.jdbc.metrics.table} (id,companyId,projectId,testId,date,footprint,success,data) VALUES(?,?,?,?,?,?,?,?)")
+        final PreparedStatement smt = connection.prepareStatement("INSERT INTO ${configContext.jdbc.metrics.table} (id,company_id,project_id,test_id,date,footprint,success,data) VALUES(?,?,?,?,?,?,?,?)")
         smt.setObject(1,mMetrics._id)
         smt.setObject(2,companyId)
         smt.setObject(3,projectId)

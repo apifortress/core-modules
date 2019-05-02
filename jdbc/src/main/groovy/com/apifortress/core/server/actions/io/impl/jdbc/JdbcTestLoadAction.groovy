@@ -5,6 +5,7 @@ import com.apifortress.core.core.messages.RunTestMessage
 import com.apifortress.core.server.context.ConfigContext
 import org.springframework.beans.factory.annotation.Autowired
 
+import java.sql.DatabaseMetaData
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 
@@ -22,18 +23,17 @@ class JdbcTestLoadAction extends AbstractJdbcBaseAction implements ITestLoadActi
         final def companyId = runTestMessage.companyId
         final def projectId = runTestMessage.projectId
         final def testId = runTestMessage.test.id
-        final PreparedStatement smt = connection.prepareStatement("SELECT * FROM ${configContext.jdbc.tests.table} WHERE id=? AND companyId=? AND projectId=?")
+        final PreparedStatement smt = connection.prepareStatement("SELECT * FROM ${configContext.jdbc.tests.table} WHERE id=? AND company_id=? AND project_id=?")
         smt.setObject(1,testId)
         smt.setObject(2,companyId)
         smt.setObject(3,projectId)
 
         ResultSet rs = smt.executeQuery()
         if(rs.next()){
-            runTestMessage.test.unit = rs.getString('unit')
-            runTestMessage.test.input = rs.getString('input')
+            runTestMessage.getTest().setUnit(rs.getString('unit'))
+            runTestMessage.getTest().setInput(rs.getString('input'))
         }
         rs.close()
-
     }
 
     @Override
