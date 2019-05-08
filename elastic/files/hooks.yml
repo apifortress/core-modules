@@ -1,0 +1,4 @@
+hooks:
+- identifier: c1p1
+  companyId: company1
+  projectId: project1

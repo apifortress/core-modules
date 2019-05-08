@@ -1,0 +1,39 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context = "http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <context:annotation-config />
+    <context:component-scan base-package="com.apifortress.core"/>
+
+    <bean id="schedulerAction" class="com.apifortress.core.core.actions.initiate.impl.mock.MockSchedulerAction"/>
+
+    <bean id="testExecutorAction" class="com.apifortress.core.core.actions.initiate.impl.mock.MockTestExecutorAction"/>
+
+    <bean id="vaultLoadAction" class="com.apifortress.core.server.actions.io.impl.filesystem.FilesystemVaultLoadAction" scope="prototype"/>
+
+    <!--<bean id="downloaderLoadAction" class="com.apifortress.core.server.actions.io.impl.filesystem.FilesystemDownloaderLoadAction" scope="prototype"/>-->
+    <bean id="downloaderLoadAction" class="com.apifortress.core.server.actions.io.impl.local.LocalDownloadLoadAction" scope="prototype"/>
+
+    <bean id="testLoadAction" class="com.apifortress.core.server.actions.io.impl.filesystem.FilesystemTestLoadAction" scope="prototype"/>
+
+    <bean id="metricsStoreAction" class="com.apifortress.core.server.actions.io.impl.elastic.ElasticMetricsStoreAction" scope="prototype"/>
+    <bean id="eventStoreAction" class="com.apifortress.core.server.actions.io.impl.elastic.ElasticEventStoreAction" scope="prototype"/>
+    <bean id="sourceStoreAction" class="com.apifortress.core.core.actions.io.impl.mock.MockSourceStoreAction" scope="prototype"/>
+
+    <bean id="postMetricsStoreAction" class="com.apifortress.core.core.actions.post.impl.mock.MockPostMetricsStoreAction" scope="prototype"/>
+    <bean id="postEventStoreAction" class="com.apifortress.core.core.actions.post.impl.mock.MockPostEventStoreAction" scope="prototype"/>
+
+    <bean id="hooksLoadAction" class="com.apifortress.core.server.webserver.actions.impl.filesystem.FilesystemHooksLoadAction"/>
+
+    <bean id="idGenerator" class="com.apifortress.core.server.generators.impl.mongo.MongoIdGenerator"/>
+
+    <bean id="supervisorProvider" class="com.apifortress.core.server.supervisors.impl.CoreSupervisorProvider"/>
+
+    <bean id="testRunActor" class="com.apifortress.core.core.actors.execute.TestRunActor" scope="prototype"/>
+    <bean id="testRunAction" class="com.apifortress.core.core.actions.execute.impl.DefaultTestRunAction"/>
+
+</beans>

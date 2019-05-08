@@ -1,0 +1,45 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<import resource="classpath:ws_beans.xml"/>
+	<import resource="classpath:onprem_beans.xml"/>
+	
+	<!-- reporter -->
+	<bean id="reporter" class="com.apifortress.core.core.reporters.MastiffReporter" scope="prototype"/>
+
+	<bean id="jdbc" class="com.apifortress.extras.extraconnect.WSJDBCOperation" scope="prototype"/>
+	<bean id="github" class="com.apifortress.extras.extraconnect.WSGitHubOperation" scope="prototype"/>
+	
+	<!-- sources -->
+	<bean id="inputBatterySource" class="com.simonepezzano.wstest.sources.impl.WSInputBatterySourceLocal" scope="prototype"/>
+	<bean id="unitSource" class="com.simonepezzano.wstest.sources.impl.WSUnitSourceLocal" scope="prototype"/>
+	<bean id="xsdFileSource" class="com.simonepezzano.wstest.sources.impl.WSXsdSourceLocal" scope="prototype"/>
+	<bean id="xsdRemoteSource" class="com.simonepezzano.wstest.sources.impl.WSXsdSourceRemote" scope="prototype"/>
+	<bean id="dtdFileSource" class="com.simonepezzano.wstest.sources.impl.WSDtdSourceLocal" scope="prototype"/>
+	<bean id="dtdRemoteSource" class="com.simonepezzano.wstest.sources.impl.WSDtdSourceRemote" scope="prototype"/>
+	<bean id="testSource" class="com.simonepezzano.wstest.sources.impl.WSTestSourceLocal" scope="prototype"/>
+
+	<bean id="snippetSource" class="com.apifortress.core.server.sources.CoreSnippetSource" scope="prototype"/>
+	
+	<!-- RR marshaling -->
+	<bean id="rrBundleSerializer" class="com.simonepezzano.wstest.marshal.impl.jaxb.JaxbRRBundleSerializer"/>
+	
+	<!-- updaters -->
+	<bean id="inputUpdater" class="com.apifortress.core.server.updaters.impl.http.HttpInputUpdater"/>
+	
+	<!-- datasets -->
+	<bean id="dataset" class="com.simonepezzano.wstest.dataset.impl.WSMockDataset"/>
+	
+	<!-- validators -->
+	<bean id="json_validator" class="com.simonepezzano.wstest.validators.impl.RefTestSchemaValidator"/>
+
+	<bean id="testLauncher" class="com.apifortress.core.core.launchers.impl.CoreTestLauncher" scope="prototype"/>
+
+	<!-- agents -->
+	<bean id="download_agent" class="com.simonepezzano.wstest.agents.download.impl.WSBaseDownloadAgent" scope="prototype"/>
+	<!--<bean id="download_agent" class="com.apifortress.core.server.downloaders.WSMixedDownloadDock" scope="prototype"/>-->
+	<!--<bean id="download_agent" class="com.simonepezzano.wstest.agents.download.impl.WSRemoteDownloadDock" scope="prototype"/>-->
+
+</beans>
