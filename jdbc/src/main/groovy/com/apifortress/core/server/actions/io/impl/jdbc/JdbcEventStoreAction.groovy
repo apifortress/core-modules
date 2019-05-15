@@ -8,12 +8,18 @@ import java.sql.PreparedStatement
 /**
  * © 2018 API Fortress
  * @author Simone Pezzano
+ * Stores events to database
  * */
 class JdbcEventStoreAction extends AbstractJdbcBaseAction implements IEventStoreAction {
 
     @Autowired
     ObjectMapper objectMapper
 
+    /**
+     * JDBC Method to store events in the database
+     * @param mEvent
+     * @throws Exception
+     */
     @Override
     void store(MEvent mEvent) throws Exception {
         final def companyId = mEvent.companyId

@@ -12,12 +12,18 @@ import java.sql.ResultSet
 /**
  * © 2018 API Fortress
  * @author Simone Pezzano
+ * Loads test unit and input from database
  * */
 class JdbcTestLoadAction extends AbstractJdbcBaseAction implements ITestLoadAction {
 
     @Autowired
     ConfigContext configContext
 
+    /**
+     * JDBC Method to load test unit and input from database
+     * @param runTestMessage
+     * @throws Exception
+     */
     @Override
     void load(RunTestMessage runTestMessage) throws Exception {
         final def companyId = runTestMessage.companyId
@@ -30,6 +36,7 @@ class JdbcTestLoadAction extends AbstractJdbcBaseAction implements ITestLoadActi
 
         ResultSet rs = smt.executeQuery()
         if(rs.next()){
+            runTestMessage.getTest().setName(rs.getString('name'))
             runTestMessage.getTest().setUnit(rs.getString('unit'))
             runTestMessage.getTest().setInput(rs.getString('input'))
         }

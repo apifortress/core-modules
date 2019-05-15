@@ -10,6 +10,7 @@ import java.sql.PreparedStatement
 /**
  * © 2018 API Fortress
  * @author Simone Pezzano
+ * Stores metrics to database
  * */
 class JdbcMetricsStoreAction extends AbstractJdbcBaseAction implements IMetricsStoreAction {
 
@@ -21,6 +22,11 @@ class JdbcMetricsStoreAction extends AbstractJdbcBaseAction implements IMetricsS
         return 'metrics'
     }
 
+    /**
+     * JDBC Method to store metrics in the database
+     * @param mMetrics
+     * @throws Exception
+     */
     @Override
     void store(MMetrics mMetrics) throws Exception {
         final def companyId = mMetrics.companyId
