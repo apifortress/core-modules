@@ -49,40 +49,4 @@ class JdbcVaultLoadAction extends AbstractJdbcBaseAction implements IVaultLoadAc
         return vault
     }
 
-    MVault loadVaultComplex(Object companyId, Object projectId) {
-        PreparedStatement snippetSmt = connection.prepareStatement("SELECT * FROM ${configContext.jdbc.vaultComplex.table} where company_id=? AND project_id=? AND vault_type =?")
-        snippetSmt.setObject(1,companyId)
-        snippetSmt.setObject(2,projectId)
-        snippetSmt.setObject(3,'snippets')
-        ResultSet rsSnippets = snippetSmt.executeQuery()
-
-        PreparedStatement variablesSmt = connection.prepareStatement("SELECT * FROM ${configContext.jdbc.vaultComplex.table} where company_id=? AND project_id=? AND vault_type =?")
-        variablesSmt.setObject(1,companyId)
-        variablesSmt.setObject(2,projectId)
-        variablesSmt.setObject(3,'variables')
-        ResultSet rsVariables = variablesSmt.executeQuery()
-
-        MVault vault = new MVault()
-        Map snippets = new HashMap()
-        while (rsSnippets.next()){
-            def snippetName = rsSnippets.getString('name')
-            def snippet = [code:rsSnippets.getString('code'),name:rsSnippets.getString('name')]
-            snippets.put(snippetName,snippet)
-        }
-        vault.put('snippets',snippets)
-
-        Map variables = new HashMap()
-        while (rsVariables.next()){
-            def variableName = rsVariables.getString('name')
-            def variable = [value:rsVariables.getString('value'),name:rsVariables.getString('name')]
-            variables.put(variableName,variable)
-        }
-        vault.put('variables',variables)
-
-        rsSnippets.close()
-        rsVariables.close()
-
-        println vault
-        return vault
-    }
 }
