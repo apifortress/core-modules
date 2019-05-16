@@ -18,11 +18,19 @@ public class FilesystemTestLoadAction implements ITestLoadAction {
         final String basepath = configContext.filesystem.tests.basepath
         final String dirPath = "${basepath}${File.separator}${runTestMessage.getCompanyId()}${File.separator}${runTestMessage.getProjectId()}${File.separator}${runTestMessage.getTest().getId()}"
         final File directory = new File(dirPath)
-        if(!directory.exists())
+        if (!directory.exists())
             throw new Exception("Test directory not found")
-        File unitFile = new File(directory.getAbsolutePath()+File.separator+"unit.xml")
-        File inputFile = new File(directory.getAbsolutePath()+File.separator+"input.xml")
+        File unitFile = new File(directory.getAbsolutePath() + File.separator + "unit.xml")
+        File inputFile = new File(directory.getAbsolutePath() + File.separator + "input.xml")
         runTestMessage.getTest().setUnit(FileUtils.readFileToString(unitFile, "UTF-8"))
         runTestMessage.getTest().setInput(FileUtils.readFileToString(inputFile, "UTF-8"))
+    }
+
+    @Override
+    List<String> listIds(def companyId, def projectId) {
+        final String basepath = configContext.filesystem.tests.basepath
+        final String dirPath = "${basepath}${File.separator}${companyId}${File.separator}${projectId}${File.separator}"
+        File dir = new File(dirPath)
+        return dir.list()
     }
 }
