@@ -44,8 +44,6 @@ class JdbcVaultLoadAction extends AbstractJdbcBaseAction implements IVaultLoadAc
             vault = MVault.create(yaml.load(rs.getString('data')))
         }
         rs.close()
-
-        println vault
         return vault
     }
 

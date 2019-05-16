@@ -44,6 +44,21 @@ class JdbcTestLoadAction extends AbstractJdbcBaseAction implements ITestLoadActi
     }
 
     @Override
+    List<String> listIds(def companyId, def projectId) {
+        final PreparedStatement smt = connection.prepareStatement("SELECT * FROM ${configContext.jdbc.tests.table} WHERE company_id=? AND project_id=?")
+        smt.setObject(1,companyId)
+        smt.setObject(2,projectId)
+        ResultSet rs = smt.executeQuery()
+        ArrayList<String> listIds = new ArrayList<>()
+        while (rs.next())
+        {
+            listIds.add(rs.getString('id'))
+        }
+        rs.close()
+        return listIds
+    }
+
+    @Override
     protected String getConfigSection() {
         return 'tests'
     }
