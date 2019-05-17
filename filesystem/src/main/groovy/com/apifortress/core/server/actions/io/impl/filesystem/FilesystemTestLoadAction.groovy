@@ -31,6 +31,23 @@ public class FilesystemTestLoadAction implements ITestLoadAction {
         final String basepath = configContext.filesystem.tests.basepath
         final String dirPath = "${basepath}${File.separator}${companyId}${File.separator}${projectId}${File.separator}"
         File dir = new File(dirPath)
-        return dir.list()
+        def dirs = listNotHiddenDirectories(dir)
+        return dirs
     }
+
+    private  ArrayList listNotHiddenDirectories(File dir) {
+        ArrayList fileNames = new ArrayList()
+        try {
+            File[] files = dir.listFiles();
+            for (File file : files) {
+                if (file.isDirectory() && !file.name.startsWith(".") &&!file.isHidden())
+                    fileNames.add(file.name)
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fileNames
+    }
+
+
 }
