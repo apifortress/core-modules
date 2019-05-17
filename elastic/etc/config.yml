@@ -25,11 +25,25 @@ elastic:
     port1: 9200
     port2: 9201
     scheme: http
+    id: _id
+  eventspost:
+    host: localhost
+    port1: 9200
+    port2: 9201
+    scheme: http
+    id: _id
   metrics:
     host: localhost
     port1: 9200
     port2: 9201
     scheme: http
+    id: _id
+  metricspost:
+    host: localhost
+    port1: 9200
+    port2: 9201
+    scheme: http
+    id: _id
 
 filesystem:
   downloader:

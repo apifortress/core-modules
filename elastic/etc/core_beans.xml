@@ -24,8 +24,8 @@
     <bean id="eventStoreAction" class="com.apifortress.core.server.actions.io.impl.elastic.ElasticEventStoreAction" scope="prototype"/>
     <bean id="sourceStoreAction" class="com.apifortress.core.core.actions.io.impl.mock.MockSourceStoreAction" scope="prototype"/>
 
-    <bean id="postMetricsStoreAction" class="com.apifortress.core.core.actions.post.impl.mock.MockPostMetricsStoreAction" scope="prototype"/>
-    <bean id="postEventStoreAction" class="com.apifortress.core.core.actions.post.impl.mock.MockPostEventStoreAction" scope="prototype"/>
+    <bean id="postMetricsStoreAction" class="com.apifortress.core.server.actions.post.impl.elastic.ElasticPostMetricsStoreAction" scope="prototype"/>
+    <bean id="postEventStoreAction" class="com.apifortress.core.server.actions.post.impl.elastic.ElasticPostEventStoreAction" scope="prototype"/>
 
     <bean id="hooksLoadAction" class="com.apifortress.core.server.webserver.actions.impl.filesystem.FilesystemHooksLoadAction"/>
 

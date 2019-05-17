@@ -1,43 +1,41 @@
-package com.apifortress.core.server.actions.io.impl.elastic
-import com.apifortress.core.core.actions.io.IEventStoreAction
-import com.apifortress.core.core.beans.MEvent
+package com.apifortress.core.server.actions.post.impl.elastic
+
+import com.apifortress.core.core.actions.post.IPostMetricsStoreAction
+import com.apifortress.core.core.beans.MMetrics
+import com.apifortress.core.server.actions.io.impl.elastic.AbstractElasticBaseAction
 import com.apifortress.core.server.context.ConfigContext
-import org.apache.http.HttpHost
-import org.codehaus.jackson.map.ObjectMapper
 import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.action.index.IndexResponse
 import org.elasticsearch.client.RequestOptions
-import org.elasticsearch.client.RestClient
-import org.elasticsearch.client.RestHighLevelClient
 import org.springframework.beans.factory.annotation.Autowired
+
 /**
  * © 2018 API Fortress
  *
  * @author Simone Pezzano
  **/
-class ElasticEventStoreAction extends AbstractElasticBaseAction implements IEventStoreAction {
+class ElasticPostMetricsStoreAction extends AbstractElasticBaseAction implements IPostMetricsStoreAction {
 
     @Autowired
     ConfigContext configContext;
 
     @Override
-    void store(MEvent mEvent) throws Exception {
+    void perform(MMetrics mMetrics) {
         try {
             Map<String, Object> jsonMap = new HashMap<>();
-            jsonMap.putAll(mEvent)
-            jsonMap.put("time",new Date(mEvent.date))
+            jsonMap.putAll(mMetrics.clone())
             jsonMap.remove(configContext.elastic[configSection]['id'])
             def index = configContext.elastic[configSection]['id']
-            IndexRequest indexRequest = new IndexRequest(configSection).id(mEvent.get(index)).source(jsonMap);
+            IndexRequest indexRequest = new IndexRequest(configSection).id(mMetrics.get(index)).source(jsonMap);
             IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
         } catch (Exception e) {
             println e.getMessage()
             println e.printStackTrace()
         }
     }
-
+    
     @Override
     protected String getConfigSection() {
-        'events'
+        'metricspost'
     }
 }

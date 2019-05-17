@@ -1,32 +1,32 @@
-package com.apifortress.core.server.actions.io.impl.elastic
-import com.apifortress.core.core.actions.io.IEventStoreAction
+package com.apifortress.core.server.actions.post.impl.elastic
+
+import com.apifortress.core.core.actions.post.IPostEventStoreAction
 import com.apifortress.core.core.beans.MEvent
+import com.apifortress.core.server.actions.io.impl.elastic.AbstractElasticBaseAction
 import com.apifortress.core.server.context.ConfigContext
-import org.apache.http.HttpHost
-import org.codehaus.jackson.map.ObjectMapper
 import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.action.index.IndexResponse
 import org.elasticsearch.client.RequestOptions
-import org.elasticsearch.client.RestClient
-import org.elasticsearch.client.RestHighLevelClient
 import org.springframework.beans.factory.annotation.Autowired
+
 /**
  * © 2018 API Fortress
  *
  * @author Simone Pezzano
  **/
-class ElasticEventStoreAction extends AbstractElasticBaseAction implements IEventStoreAction {
+class ElasticPostEventStoreAction extends AbstractElasticBaseAction implements IPostEventStoreAction {
 
     @Autowired
     ConfigContext configContext;
 
     @Override
-    void store(MEvent mEvent) throws Exception {
+    void perform(MEvent mEvent) {
         try {
             Map<String, Object> jsonMap = new HashMap<>();
-            jsonMap.putAll(mEvent)
-            jsonMap.put("time",new Date(mEvent.date))
+            jsonMap.putAll(mEvent.clone())
             jsonMap.remove(configContext.elastic[configSection]['id'])
+            jsonMap.remove('events')
+            jsonMap.put("time",new Date(mEvent.date))
             def index = configContext.elastic[configSection]['id']
             IndexRequest indexRequest = new IndexRequest(configSection).id(mEvent.get(index)).source(jsonMap);
             IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
@@ -38,6 +38,6 @@ class ElasticEventStoreAction extends AbstractElasticBaseAction implements IEven
 
     @Override
     protected String getConfigSection() {
-        'events'
+        'eventspost'
     }
 }
