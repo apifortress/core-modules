@@ -15,7 +15,7 @@
 
     <bean id="vaultLoadAction" class="com.apifortress.core.server.actions.io.impl.filesystem.FilesystemVaultLoadAction" scope="prototype"/>
 
-    <!--<bean id="downloaderLoadAction" class="com.apifortress.core.server.actions.io.impl.filesystem.FilesystemDownloaderLoadAction" scope="prototype"/>-->
+    <!--<bean id="downloaderLoadAction" class="FilesystemDownloaderLoadAction" scope="prototype"/>-->
     <bean id="downloaderLoadAction" class="com.apifortress.core.server.actions.io.impl.local.LocalDownloadLoadAction" scope="prototype"/>
 
     <bean id="testLoadAction" class="com.apifortress.core.server.actions.io.impl.filesystem.FilesystemTestLoadAction" scope="prototype"/>
