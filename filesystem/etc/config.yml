@@ -32,3 +32,6 @@ filesystem:
     basepath: files/vault
   hooks:
     path: files/hooks.yml
+  schedules:
+    basepath: files/schedules
+    filename: schedule.properties

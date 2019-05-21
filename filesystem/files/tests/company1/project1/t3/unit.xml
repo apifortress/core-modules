@@ -5,7 +5,7 @@
   </configs>
   <sequence name="main">
     <comment>
-      <![CDATA[${foo} ${gino}]]>
+      <![CDATA[Developers workflow demo #4]]>
     </comment>
     <get url="${protocol}${domain}${endpoint}" params="[:]" var="payload" mode="json" gen="rag">
       <header name="key" value="${key}" gen="rag"/>
