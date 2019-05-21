@@ -9,13 +9,15 @@
     <context:annotation-config />
     <context:component-scan base-package="com.apifortress.core"/>
 
-    <bean id="schedulerAction" class="com.apifortress.core.core.actions.initiate.impl.mock.MockSchedulerAction"/>
+    <!--<bean id="schedulerAction" class="com.apifortress.core.core.actions.initiate.impl.mock.MockSchedulerAction"/>-->
+    <bean id="schedulerAction" class="com.apifortress.core.server.actions.initiate.impl.internal.InternalSchedulerAction"/>
+    <bean id="schedulesLoadAction" class="com.apifortress.core.server.actions.io.impl.jdbc.JdbcSchedulesLoadAction" scope="prototype"/>
+    <!--<bean id="schedulesLoadAction" class="com.apifortress.core.server.actions.io.impl.http.HttpSchedulesLoadAction" scope="prototype"/>-->
 
     <bean id="testExecutorAction" class="com.apifortress.core.core.actions.initiate.impl.mock.MockTestExecutorAction"/>
 
     <bean id="vaultLoadAction" class="com.apifortress.core.server.actions.io.impl.jdbc.JdbcVaultLoadAction" scope="prototype"/>
 
-    <!--<bean id="downloaderLoadAction" class="com.apifortress.core.server.actions.io.impl.filesystem.FilesystemDownloaderLoadAction" scope="prototype"/>-->
     <bean id="downloaderLoadAction" class="com.apifortress.core.server.actions.io.impl.local.LocalDownloadLoadAction" scope="prototype"/>
 
     <bean id="testLoadAction" class="com.apifortress.core.server.actions.io.impl.jdbc.JdbcTestLoadAction" scope="prototype"/>

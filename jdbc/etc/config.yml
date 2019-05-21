@@ -62,6 +62,14 @@ jdbc:
       user: postgres
       password: docker
     table: hooks
+  schedules:
+    driver: org.postgresql.Driver
+    url: jdbc:postgresql://localhost/postgres
+    properties:
+      user: postgres
+      password: docker
+    table: schedules
+
 
 filesystem:
   hooks:
