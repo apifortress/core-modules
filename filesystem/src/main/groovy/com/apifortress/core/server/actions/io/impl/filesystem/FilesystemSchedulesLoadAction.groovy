@@ -40,34 +40,30 @@ class FilesystemSchedulesLoadAction implements ISchedulesLoadAction {
             for (File projectDirectory : projectDirectories) {
                 ArrayList testDirectories = listNotHiddenDirectories(projectDirectory)
                 for (File testDirectory : testDirectories) {
-                    try {
-                        final String file = "${testDirectory.getAbsolutePath()}${File.separator}${filename}"
-                        File scheduleFile = new File(file)
-                        InputStream scheduleStream = new FileInputStream(scheduleFile)
-                        Properties properties = new Properties();
-                        properties.load(scheduleStream);
-                        scheduleStream.close()
+                    final String file = "${testDirectory.getAbsolutePath()}${File.separator}${filename}"
+                    File scheduleFile = new File(file)
+                    InputStream scheduleStream = new FileInputStream(scheduleFile)
+                    Properties properties = new Properties();
+                    properties.load(scheduleStream);
+                    scheduleStream.close()
 
-                        Schedule schedule = new Schedule()
-                        schedule.id = file
-                        schedule.name = properties.name
-                        schedule.testId = properties.test_id
-                        schedule.projectId = properties.project_id
-                        schedule.companyId = properties.company_id
-                        schedule.lastUpdated = new Date(scheduleFile.lastModified())
-                        schedule.paused = Boolean.parseBoolean(properties.paused)
-                        schedule.periodString = properties.period_string
-                        schedule.timezone = properties.timezone
-                        schedule.downloaderId = properties.downloader_id
+                    Schedule schedule = new Schedule()
+                    schedule.id = file
+                    schedule.name = properties.name
+                    schedule.testId = properties.test_id
+                    schedule.projectId = properties.project_id
+                    schedule.companyId = properties.company_id
+                    schedule.lastUpdated = new Date(scheduleFile.lastModified())
+                    schedule.paused = Boolean.parseBoolean(properties.paused)
+                    schedule.periodString = properties.period_string
+                    schedule.timezone = properties.timezone
+                    schedule.downloaderId = properties.downloader_id
 
-                        if (properties.overrides)
-                            schedule.overrides = new JsonSlurper().parseText(properties.overrides)
-                        else
-                            schedule.overrides = [:]
-                        schedules.add(schedule)
-                    } catch (Exception e) {
-                        println e.getMessage()
-                    }
+                    if (properties.overrides)
+                        schedule.overrides = new JsonSlurper().parseText(properties.overrides)
+                    else
+                        schedule.overrides = [:]
+                    schedules.add(schedule)
                 }
             }
         }
