@@ -29,7 +29,7 @@ class JdbcSchedulesLoadAction extends AbstractJdbcBaseAction implements ISchedul
      * @throws Exception
      */
     @Override
-    Schedules load(){
+    Schedules load() {
         final PreparedStatement smt = connection.prepareStatement("SELECT * FROM ${configContext.jdbc.schedules.table}")
         ResultSet rs = smt.executeQuery()
         Schedules schedules = new Schedules()
