@@ -6,6 +6,7 @@ import com.apifortress.core.server.actions.io.ISchedulesLoadAction
 import com.apifortress.core.server.beans.Schedule
 import com.apifortress.core.server.beans.Schedules
 import com.apifortress.core.server.context.ConfigContext
+import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -40,7 +41,7 @@ class JdbcSchedulesLoadAction extends AbstractJdbcBaseAction implements ISchedul
             schedule.testId = rs.getString('test_id')
             schedule.projectId = rs.getString('project_id')
             schedule.companyId = rs.getString('company_id')
-            schedule.lastUpdated = rs.getDate('last_update')
+            schedule.lastUpdated = new Date(rs.getTimestamp('last_update').getTime())
             schedule.paused = rs.getBoolean('paused')
             schedule.periodString = rs.getString('period_string')
             schedule.timezone = rs.getString('timezone')
@@ -50,6 +51,8 @@ class JdbcSchedulesLoadAction extends AbstractJdbcBaseAction implements ISchedul
                 schedule.overrides = new JsonSlurper().parseText(rs.getString('overrides'))
             else
                 schedule.overrides = [:]
+
+            println(JsonOutput.toJson(schedule))
             schedules.add(schedule)
         }
         rs.close()
