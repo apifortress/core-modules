@@ -9,7 +9,7 @@ CREATE TABLE public.schedules
   test_id text,
   project_id text,
   company_id text,
-  last_update date,
+  last_update timestamp with time zone,
   paused boolean,
   period_string text,
   timezone text,
