@@ -26,8 +26,9 @@ class ElasticMetricsStoreAction extends AbstractElasticBaseAction implements IMe
             Map<String, Object> jsonMap = new HashMap<>();
             jsonMap.putAll(mMetrics)
             jsonMap.remove(configContext.elastic[configSection]['id'])
-            def index = configContext.elastic[configSection]['id']
-            IndexRequest indexRequest = new IndexRequest(configSection).id(mMetrics.get(index)).source(jsonMap);
+            def id = configContext.elastic[configSection]['id']
+            def index = configContext.elastic[configSection]['index']
+            IndexRequest indexRequest = new IndexRequest(index).id(mMetrics.get(id)).source(jsonMap);
             IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
         } catch (Exception e) {
             println e.getMessage()

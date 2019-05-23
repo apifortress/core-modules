@@ -26,24 +26,28 @@ elastic:
     port2: 9201
     scheme: http
     id: _id
+    index: fortressevents
   eventspost:
     host: localhost
     port1: 9200
     port2: 9201
     scheme: http
     id: _id
+    index: fortresseventspost
   metrics:
     host: localhost
     port1: 9200
     port2: 9201
     scheme: http
     id: _id
+    index: fortressmetrics
   metricspost:
     host: localhost
     port1: 9200
     port2: 9201
     scheme: http
     id: _id
+    index: fortressmetricspost
 
 filesystem:
   downloader:

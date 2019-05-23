@@ -27,8 +27,9 @@ class ElasticPostEventStoreAction extends AbstractElasticBaseAction implements I
             jsonMap.remove(configContext.elastic[configSection]['id'])
             jsonMap.remove('events')
             jsonMap.put("time",new Date(mEvent.date))
-            def index = configContext.elastic[configSection]['id']
-            IndexRequest indexRequest = new IndexRequest(configSection).id(mEvent.get(index)).source(jsonMap);
+            def id = configContext.elastic[configSection]['id']
+            def index = configContext.elastic[configSection]['index']
+            IndexRequest indexRequest = new IndexRequest(index).id(mEvent.get(id)).source(jsonMap);
             IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
         } catch (Exception e) {
             println e.getMessage()
