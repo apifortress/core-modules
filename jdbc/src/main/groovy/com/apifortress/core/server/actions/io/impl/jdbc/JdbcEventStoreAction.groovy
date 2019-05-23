@@ -22,16 +22,14 @@ class JdbcEventStoreAction extends AbstractJdbcBaseAction implements IEventStore
      */
     @Override
     void store(MEvent mEvent) throws Exception {
-        final def companyId = mEvent.companyId
-        final def projectId = mEvent.projectId
-        final def testId = mEvent.test.id
-        final PreparedStatement smt = connection.prepareStatement("INSERT INTO ${configContext.jdbc.events.table} (id,company_id,project_id,test_id,date,data) VALUES(?,?,?,?,?,?)")
+        final PreparedStatement smt = connection.prepareStatement("INSERT INTO ${configContext.jdbc.events.table} (id,company_id,project_id,test_id,failures_count,date,data) VALUES(?,?,?,?,?,?,?)")
         smt.setString(1,mEvent._id)
-        smt.setObject(2,companyId)
-        smt.setObject(3,projectId)
-        smt.setObject(4,testId)
-        smt.setLong(5,mEvent.date)
-        smt.setString(6,objectMapper.writeValueAsString(mEvent))
+        smt.setObject(2,mEvent.companyId)
+        smt.setObject(3,mEvent.projectId)
+        smt.setObject(4,mEvent.test.id)
+        smt.setObject(5,mEvent.failuresCount)
+        smt.setLong(6,mEvent.date)
+        smt.setString(7,objectMapper.writeValueAsString(mEvent))
         smt.execute()
     }
 
