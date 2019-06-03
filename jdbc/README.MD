@@ -1,7 +1,7 @@
-#JDBC
+# JDBC
 Implements load of tests,schedules and vault, store of events and metrics, download of tests on SQL database
 
-##Configuration
+## Configuration
 Jdbc module requires a specific entry in etc\config.yml as the following
 
 **jdbc**:  
@@ -20,7 +20,7 @@ Jdbc module requires a specific entry in etc\config.yml as the following
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**password**: user password  
 &nbsp;&nbsp;&nbsp;&nbsp;**table**: action2 database table (ex. **tests**)  
 
-Configuration Example  
+## Configuration Example  
 jdbc:  
 &nbsp;&nbsp;downloader:  
 &nbsp;&nbsp;&nbsp;&nbsp;driver: org.postgresql.Driver  
