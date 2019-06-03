@@ -1,4 +1,4 @@
-#Core Modules
+# Core Modules
 This project contains several modules that can be used by the core server.
 Core server implements the following actions
 - load a fortress hook
@@ -20,13 +20,13 @@ In core_beans.xml the user can configure spring to use the specific module for a
 Moreover this project contains a simple mule project (eclipse is needed)
 The mule project can substitute the fortress dashboard as endpoint.
 
-##Modules  
-###Elastic  
+## Modules
+### Elastic  
 Implements store of events, metrics, post events, post metrics in elastic search.  
-###Filesystem  
+### Filesystem  
 Implements load of tests,schedules and vault, store of events and metrics, download of tests on file system.  
-###JDBC  
-Implements load of tests,schedules and vault, store of events and metrics, download of tests on SQL database  
+### JDBC  
+Implements load of tests,schedules and vault, store of events and metrics, download of tests on SQL database  ****
 
 
 
