@@ -1,7 +1,7 @@
-#Elastic
+# Elastic
 Implements store of events, metrics, post events, post metrics in elastic search.
 
-##Configuration
+## Configuration
 Elastic module requires a specific entry in etc\config.yml as the following
 
 **filesystem**:  
@@ -10,7 +10,7 @@ Elastic module requires a specific entry in etc\config.yml as the following
 &nbsp;&nbsp;**action2** (downloader, events, metrics, tests, vault, hooks, schedules):  
 &nbsp;&nbsp;&nbsp;&nbsp;**basepath**: path of the action2 files    
 
-Configuration example  
+## Configuration example  
 filesystem:  
 &nbsp;&nbsp;downloader:  
 &nbsp;&nbsp;&nbsp;&nbsp;basepath: files/downloaders  
