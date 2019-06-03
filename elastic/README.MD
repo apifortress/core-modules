@@ -1,7 +1,7 @@
-#Elastic
+# Elastic
 Implements store of events, metrics, post events, post metrics in elastic search.
 
-##Configuration
+## Configuration
 Elastic module requires a specific entry in etc\config.yml as the following
 
 **elastic**:  
@@ -13,7 +13,7 @@ Elastic module requires a specific entry in etc\config.yml as the following
 &nbsp;&nbsp;&nbsp;&nbsp;**id**: custom object id (ex. _id)  
 &nbsp;&nbsp;v**index**: custome object index (ex. apifortressevents)  
 
-Configuration example  
+## Configuration example  
 
 elastic:  
 &nbsp;&nbsp;events:  
