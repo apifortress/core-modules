@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" basePath="/app" doc:name="HTTP Listener Configuration"/>
+    <db:generic-config name="testDb" url="jdbc:postgresql://localhost:5432/postgres?password=docker&amp;user=postgres" driverClassName="org.postgresql.Driver" doc:name="Generic Database Configuration"/>
+    <flow name="LoadEvents">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/api/ds/standalone/load/events" doc:name="HTTP">
+            <http:response-builder statusCode="200"/>
+        </http:listener>
+        <db:select config-ref="testDb" doc:name="Database">
+            <db:parameterized-query><![CDATA[select * from events]]></db:parameterized-query>
+        </db:select>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+    </flow>
+    <flow name="LoadMetrics">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/api/ds/standalone/load/metrics" doc:name="HTTP">
+            <http:response-builder statusCode="200"/>
+        </http:listener>
+        <db:select config-ref="testDb" doc:name="Database">
+            <db:parameterized-query><![CDATA[select * from metrics]]></db:parameterized-query>
+        </db:select>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+    </flow>
+    <flow name="LoadTest">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/api/ds/standalone/load/test/{testID}" doc:name="HTTP">
+            <http:response-builder statusCode="200"/>
+        </http:listener>
+        <db:select config-ref="testDb" doc:name="Database">
+            <db:parameterized-query><![CDATA[select * from tests where id = #[message.inboundProperties.'http.uri.params'.testID]]]></db:parameterized-query>
+        </db:select>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+    </flow>
+    <flow name="LoadTestList">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/api/ds/standalone/load/testList?cid={companyId}&amp;pid={projectId}" doc:name="HTTP">
+            <http:response-builder statusCode="200"/>
+        </http:listener>
+        <db:select config-ref="testDb" doc:name="Database">
+            <db:parameterized-query><![CDATA[select * from tests where company_id = #[message.inboundProperties.'http.query.params'.cid] and project_id = #[message.inboundProperties.'http.query.params'.pid]]]></db:parameterized-query>
+        </db:select>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+    </flow>
+    <flow name="LoadSchedules">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/api/ds/standalone/load/schedules" doc:name="HTTP">
+            <http:response-builder statusCode="200"/>
+        </http:listener>
+        <db:select config-ref="testDb" doc:name="Database">
+            <db:parameterized-query><![CDATA[select * from schedules]]></db:parameterized-query>
+        </db:select>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+    </flow>
+    <flow name="LoadVault">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/api/ds/standalone/load/vault?cid={companyId}&amp;pid={projectId}" doc:name="HTTP">
+            <http:response-builder statusCode="200"/>
+        </http:listener>
+        <db:select config-ref="testDb" doc:name="Database">
+            <db:parameterized-query><![CDATA[select * from vault where company_id = #[message.inboundProperties.'http.query.params'.cid] and project_id = #[message.inboundProperties.'http.query.params'.pid]]]></db:parameterized-query>
+        </db:select>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+    </flow>
+    <flow name="StoreEvent">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/api/ds/standalone/store/event?cid={companyId}&amp;pid={projectId}" doc:name="HTTP">
+            <http:response-builder statusCode="200"/>
+        </http:listener>
+        <json:json-to-object-transformer returnClass="java.util.HashMap" doc:name="JSON to Object" metadata:id="990749ba-45cd-42b7-973d-2fbd9e92dcdd"/>
+        <db:insert config-ref="testDb" doc:name="Database">
+            <db:parameterized-query><![CDATA[INSERT INTO events (id,company_id,project_id,test_id,data,date,failures_count) VALUES (#[payload.id],#[payload.company_id],#[payload.project_id],#[payload.test_id],#[payload.data],#[payload.date],
+#[payload.failures_count])]]></db:parameterized-query>
+        </db:insert>
+    </flow>
+    <flow name="StoreMetrics">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/api/ds/standalone/store/metrics?cid={companyId}&amp;pid={projectId}" doc:name="HTTP">
+            <http:response-builder statusCode="200"/>
+        </http:listener>
+        <json:json-to-object-transformer returnClass="java.util.HashMap" doc:name="JSON to Object" metadata:id="990749ba-45cd-42b7-973d-2fbd9e92dcdd"/>
+        <db:insert config-ref="testDb" doc:name="Database">
+            <db:parameterized-query><![CDATA[INSERT INTO metrics (id,company_id,project_id,test_id,data,date,footprint,success) VALUES (#[payload.id],#[payload.company_id],#[payload.project_id],#[payload.test_id],#[payload.data],#[payload.date]
+,#[payload.footprint],#[payload.success]);]]></db:parameterized-query>
+        </db:insert>
+    </flow>
+</mule>
