@@ -10,6 +10,6 @@ CREATE TABLE public.events
   test_id text,
   data text,
   date bigint,
-  failures_count text,
+  failures_count int,
   CONSTRAINT events_pkey PRIMARY KEY (id)
 )
