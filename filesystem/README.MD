@@ -1,5 +1,5 @@
-# Elastic
-Implements store of events, metrics, post events, post metrics in elastic search.
+# Filesystem
+Implements store of events, metrics, post events, post metrics on the filesystem
 
 ## Configuration
 Elastic module requires a specific entry in etc\config.yml as the following
