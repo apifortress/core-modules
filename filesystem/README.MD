@@ -1,8 +1,8 @@
-# Elastic
+# Filesystem
 Implements store of events, metrics, post events, post metrics in elastic search.
 
 ## Configuration
-Elastic module requires a specific entry in etc\config.yml as the following
+Filesystem module requires a specific entry in etc\config.yml as the following
 
 **filesystem**:  
 &nbsp;&nbsp;**action1** (downloader, events, metrics, tests, vault, hooks, schedules):  
