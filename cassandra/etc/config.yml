@@ -1,0 +1,40 @@
+# This section is used for any module communicating with an API Fortress Dashboard instance
+dashboard:
+  companyId: 1
+
+# Engine settings
+engine:
+  secured: false
+  synchronous:
+    timeout: 10 seconds
+    duration: 1 minute
+
+# The core web server settings
+webserver:
+  active: true
+
+downloader:
+  location: Udine, My Home
+  socket_timeout_millis: 2000
+  connect_timeout_millis: 1000
+  disable_ssl_validation: false
+
+cassandra:
+  events:
+    host: localhost
+    port: 9042
+    user: cassandra
+    password: cassandra
+    keyspace: apiftest
+    table: events
+  metrics:
+    host: localhost
+    port: 9042
+    user: cassandra
+    password: cassandra
+    keyspace: apiftest
+    table: metrics
+
+filesystem:
+  hooks:
+    path: files/hooks.yml
